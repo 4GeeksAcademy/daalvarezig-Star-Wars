@@ -7,9 +7,9 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
+			<h1>Hello Ewook!!</h1>
 			<p>
-				<img src={rigoImageUrl} />
+				<img src="https://vieraboschkova.github.io/swapi-gallery/static/assets/img/people/30.jpg" />
 			</p>
 		</div>
 	);
