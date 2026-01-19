@@ -3,7 +3,7 @@
 export const initialStore=()=>{
   return{
     message: null,
-    people: [],
+    characters: [],
     planets: [],
     vehicles: [],
     favorites: []
@@ -15,10 +15,10 @@ export const initialStore=()=>{
 export default function storeReducer(store, action = {}) {
   switch(action.type){
 
-    case "load_people":
+    case "load_characters":
       return {
         ...store,
-        people: action.payload
+        characters: action.payload
       };
 
     case "load_planets":
@@ -52,13 +52,13 @@ export default function storeReducer(store, action = {}) {
 
 //Acciones
 
-export async function getPeople(dispatch) {
+export async function getCharacters(dispatch) {
   try {
-    const response = await fetch("https://www.swapi.tech/api/people");  //URL
+    const response = await fetch("https://www.swapi.tech/api/characters");  //URL
     const data = await response.json();
 
     dispatch({
-      type: "load_people",      // Reducer Type
+      type: "load_characters",      // Reducer Type
       payload: data.results     // Qué enviamos al store
     });
 
