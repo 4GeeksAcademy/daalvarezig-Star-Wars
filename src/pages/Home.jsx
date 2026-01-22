@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { getCharacters, getPlanets, getVehicles } from "../store.js";
+import Carrusel from "../components/Carrusel";
+
+
 
 
 export const Home = () => {
 
   const {store, dispatch} =useGlobalReducer();
+  const [category, setCategory] = useState(null);
 
   useEffect (() => {
 	getCharacters(dispatch);
@@ -15,7 +19,7 @@ export const Home = () => {
 
 	return (
 	  <>	
-		<div className="text-center mt-5">
+		<div className="text-center mt-3">
 			<h1 className="text-white mt-4">
 				<img src="https://w0.peakpx.com/wallpaper/799/369/HD-wallpaper-star-wars-logo-for-your-mobile-tablet-explore-star-wars-logo-star-wars-jedi-logo-star-wars-empire-logo.jpg"
 					 className= "img-fluid rounded-4 d-block mx-auto w-25 mb-5"
@@ -32,7 +36,7 @@ export const Home = () => {
 			<div className="modal-content bg-transparent text-warning">
 				
 				<div className="modal-header border-bottom-0 justify-content-center position-relative">
-					<h5 className="modal-title w-100 text-center">Categorias</h5>
+					<h5 className="modal-title w-100 text-center mt-5">Categorias</h5>
 				</div>	
 					
 				 <div className="modal-body">
@@ -75,6 +79,33 @@ export const Home = () => {
       	    </div>	
 		  </div>
 		</div>  
+
+		<div style={{ marginTop: "-20px" }}></div>
+
+		  {category === "characters" && (
+        <Carrusel
+          title="Personajes"
+          data={store.characters}
+          imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets"
+        />
+      )}
+
+      {category === "planets" && (
+        <Carrusel
+          title="Planetas"
+          data={store.planets}
+          imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets"
+        />
+      )}
+
+      {category === "vehicles" && (
+        <Carrusel
+          title="Vehículos"
+          data={store.vehicles}
+          imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/vehicles"
+        />
+      )}
+
 	</>	
   );
 }; 
