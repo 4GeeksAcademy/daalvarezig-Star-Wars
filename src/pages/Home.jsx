@@ -17,6 +17,8 @@ export const Home = () => {
 	getVehicles(dispatch);
   }, []);
 
+
+   {/* ====== LOGO  ====== */}
 	return (
 	  <>	
 		<div className="text-center mt-3">
@@ -30,6 +32,8 @@ export const Home = () => {
 				/>		 
 			</h1>
 		</div>
+
+		{/* ====== MODAL  ====== */}
 
 		<div className="modal fade" id="swModal" tabIndex="-1" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -45,7 +49,7 @@ export const Home = () => {
 				  <div className="d-flex flex-column align-items-center">
 					<p className="mb-2">Personajes</p>
 					<img src="https://wallpapers.com/images/featured-full/personajes-de-star-wars-rzma8krur1w1m4rn.jpg"
-					onClick={() => setCategory("people")}
+					onClick={() => setCategory("characters")}
 					className="img-fluid rounded shadow"
 					style={{ width: "140px", cursor:"pointer" }}
 					data-bs-dismiss="modal"
@@ -82,12 +86,18 @@ export const Home = () => {
 
 		<div style={{ marginTop: "-20px" }}></div>
 
+		{/* ====== CARRUSEL  ====== */}
+
 		  {category === "characters" && (
         <Carrusel
           title="Personajes"
           data={store.characters}
-          imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets"
-        />
+          imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters"
+		  favorites={store.favorites}
+          toggleFavorite={(id) =>
+            dispatch({ type: "toggle_favorite", payload: id })
+          }	
+		/>
       )}
 
       {category === "planets" && (
@@ -95,7 +105,11 @@ export const Home = () => {
           title="Planetas"
           data={store.planets}
           imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets"
-        />
+          favorites={store.favorites}
+          toggleFavorite={(id) =>
+            dispatch({ type: "toggle_favorite", payload: id })
+          }	
+		/>
       )}
 
       {category === "vehicles" && (
@@ -103,7 +117,11 @@ export const Home = () => {
           title="Vehículos"
           data={store.vehicles}
           imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/vehicles"
-        />
+          favorites={store.favorites}
+          toggleFavorite={(id) =>
+            dispatch({ type: "toggle_favorite", payload: id })
+          }	
+		/>
       )}
 
 	</>	

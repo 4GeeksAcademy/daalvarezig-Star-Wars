@@ -1,4 +1,6 @@
-export default function Carrusel({ title, data, imgBaseUrl }) {
+import Card from "./Card";
+
+export default function Carrusel({ title, data, imgBaseUrl, favorites, toggleFavorite }) {
 
     return (
         <div className="mt-4">
@@ -11,38 +13,15 @@ export default function Carrusel({ title, data, imgBaseUrl }) {
                 className="d-flex flex-nowrap overflow-auto p-3"
                 style={{ gap: "1rem" }}
             >
-                {data.map((item) => {
-
-                    return (
-                        <div
-                            className="card bg-dark text-white"
-                            style={{ width: "14rem" }}
-                            key={item.uid}
-                        >
-
-                            {/* Imagen */}
-                            <img
-                                src={`${imgBaseUrl}/${item.uid}.jpg`}
-                                className="card-img-top"
-                                alt={item.name}
-                                onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src =
-                                        "https://res.cloudinary.com/dra2cr3uw/image/upload/v1765366742/IMAGEN_MUY_MUY_LEJANA_NO_DISPONIBLE_TEMPORALMENTE_pj0r6g.png";
-                                }}
-                            />
-
-                            {/* Contenido */}
-                            <div className="card-body">
-                                <h5 className="card-title">{item.name}</h5>
-
-                                <button className="btn btn-primary">
-                                    Details
-                                </button>
-                            </div>
-                        </div>
-                    );
-                })}
+                {data.map(item => (
+                    <Card
+                        key={item.uid}
+                        item={item}
+                        imgUrl={`${imgBaseUrl}/${item.uid}.jpg`}
+                        isFavorite={favorites.includes(item.uid)}
+                        onFavoriteToggle={() => toggleFavorite(item.uid)}
+                    /> 
+                ))}     
             </div>
         </div>
     );

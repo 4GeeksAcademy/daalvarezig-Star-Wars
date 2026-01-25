@@ -45,6 +45,14 @@ export default function storeReducer(store, action = {}) {
         favorites: store.favorites.filter(fav => fav !== action.payload)
       };  
 
+    case "toggle_favorite":
+      return {
+        ...store,
+        favorites: store.favorites.includes(action.payload)
+            ? store.favorites.filter(f => f !== action.payload)
+            : [...store.favorites, action.payload]
+      };  
+
     default:
       throw Error('Unknown action.');
   }    
@@ -54,7 +62,7 @@ export default function storeReducer(store, action = {}) {
 
 export async function getCharacters(dispatch) {
   try {
-    const response = await fetch("https://www.swapi.tech/api/characters");  //URL
+    const response = await fetch("https://www.swapi.tech/api/people");  //URL
     const data = await response.json();
 
     dispatch({
