@@ -3,85 +3,61 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Navbar = () => {
 
-    const { store, dispatch } = useGlobalReducer();
-    const navigate = useNavigate();
+	const { store, dispatch } = useGlobalReducer();
+	const navigate = useNavigate();
 
-    return (
-        <nav className="navbar navbar-dark bg-dark px-3">
-            <div className="container-fluid">
+	return (
+		<nav className="navbar navbar-dark bg-dark px-3">
+			<div className="container-fluid">
 
-                {/* LOGO */}
-                <Link to="/" className="navbar-brand text-warning">
-                    Star Wars
-                </Link>
+				{/* LOGO */}
+				<Link to="/" className="navbar-brand text-warning">
+					Star Wars
+				</Link>
 
-                {/* FAVORITOS */}
-                <div className="dropdown ms-auto">
-                    <button 
-                        className="btn btn-warning dropdown-toggle" 
-                        type="button" 
-                        data-bs-toggle="dropdown"
-                    >
-                        Favoritos ({store.favorites.length})
-                    </button>
+				{/* FAVORITOS */}
+				<div className="dropdown ms-auto">
+					<button
+						className="btn btn-warning dropdown-toggle"
+						type="button"
+						data-bs-toggle="dropdown"
+					>
+						Favoritos ({store.favorites.length})
+					</button>
 
-                    <ul className="dropdown-menu dropdown-menu-end">
-                        
-                        {/* Si no hay favoritos */}
-                        {store.favorites.length === 0 && (
-                            <li className="dropdown-item text-muted">
-                                Vacío...
-                            </li>
-                        )}
+					<ul className="dropdown-menu dropdown-menu-end">
 
-                        {/* Lista dinámica */}
-                        {store.favorites.map((favId, index) => {
+						{store.favorites.length === 0 && (
+							<li className="dropdown-item text-muted">No hay favoritos</li>
+						)}
 
-                            // Buscar el elemento en characters / planets / vehicles
-                            const allItems = [
-                                ...store.characters, 
-                                ...store.planets, 
-                                ...store.vehicles
-                            ];
+						{store.favorites.map((fav, index) => (
+							<li
+								key={index}
+								className="dropdown-item d-flex justify-content-between align-items-center"
+							>
+								<span
+									onClick={() =>
+										navigate(`/details/${fav.category}/${fav.uid}`)
+									}
+									style={{ cursor: "pointer" }}
+								>
+									{fav.name || "Sin nombre"}
+									<small className="text-muted"> ({fav.category})</small>
+								</span>
 
-                            const item = allItems.find(i => i.uid === favId);
-
-                            if (!item) return null;
-
-                            return (
-                                <li 
-                                    key={index} 
-                                    className="dropdown-item d-flex justify-content-between align-items-center"
-                                >
-                                    {/* Ir al detalle */}
-                                    <span 
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => {
-                                            // Detectar categoría
-                                            let category = "people";
-                                            if (store.planets.some(p => p.uid === item.uid)) category = "planets";
-                                            if (store.vehicles.some(v => v.uid === item.uid)) category = "vehicles";
-
-                                            navigate(`/details/${category}/${item.uid}`);
-                                        }}
-                                    >
-                                        {item.name}
-                                    </span>
-
-                                    {/* Botón borrar */}
-                                    <i 
-                                        className="fa-solid fa-trash text-danger ms-2"
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => 
-                                            dispatch({ type: "toggle_favorite", payload: item.uid })
-                                        }
-                                    ></i>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
+								<i
+									className="fa-solid fa-trash text-danger"
+									onClick={() =>
+										dispatch({ type: "toggle_favorite", payload: fav })
+									}
+									style={{ cursor: "pointer" }}
+								></i>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	);
 };

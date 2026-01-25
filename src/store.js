@@ -7,8 +7,8 @@ export const initialStore=()=>{
     planets: [],
     vehicles: [],
     favorites: []
-  }
-}
+  };
+};
 
 // Reducer
 
@@ -42,20 +42,27 @@ export default function storeReducer(store, action = {}) {
     case "remove_favorite":
       return {
         ...store,
-        favorites: store.favorites.filter(fav => fav !== action.payload)
-      };  
+        favorites: store.favorites.filter(
+          fav => fav.uid !== action.payload.uid || fav.category !== action.payload.category
+        )
+      };
 
     case "toggle_favorite":
-      return {
-        ...store,
-        favorites: store.favorites.includes(action.payload)
-            ? store.favorites.filter(f => f !== action.payload)
-            : [...store.favorites, action.payload]
-      };  
+      const exists = store.favorites.find(
+        fav =>
+          fav.uid === action.payload.uid &&
+          fav.category === action.payload.category
+      );
 
-    default:
-      throw Error('Unknown action.');
-  }    
+  return {
+    ...store,
+    favorites: exists
+      ? store.favorites.filter(
+          f => !(f.uid === action.payload.uid && f.category === action.payload.category)
+        )
+      : [...store.favorites, action.payload]
+  };
+ }
 }
 
 //Acciones
