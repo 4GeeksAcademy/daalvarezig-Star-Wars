@@ -91,6 +91,7 @@ export const Home = () => {
 		  {category === "characters" && (
         <Carrusel
           title="Personajes"
+		  category="people"
           data={store.characters}
           imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters"
 		  favorites={store.favorites}
@@ -103,6 +104,7 @@ export const Home = () => {
       {category === "planets" && (
         <Carrusel
           title="Planetas"
+		  category="planets"
           data={store.planets}
           imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets"
           favorites={store.favorites}
@@ -115,6 +117,7 @@ export const Home = () => {
       {category === "vehicles" && (
         <Carrusel
           title="Vehículos"
+		  category="vehicles"
           data={store.vehicles}
           imgBaseUrl="https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/vehicles"
           favorites={store.favorites}

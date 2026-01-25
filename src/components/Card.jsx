@@ -1,5 +1,9 @@
-export default function Card({ item, imgUrl, isFavorite, onFavoriteToggle }) {
+import { useNavigate } from "react-router-dom";
 
+export default function Card({ item, imgUrl, isFavorite, onFavoriteToggle, category }) {
+
+    const navigate = useNavigate();
+    
     return (
         <div 
             className="card bg-dark text-white shadow-lg"
@@ -43,7 +47,10 @@ export default function Card({ item, imgUrl, isFavorite, onFavoriteToggle }) {
                 </div>
 
                 {/* DETALLES */}
-                <button className="btn btn-primary mt-3 w-100 text-nowrap">
+                <button
+                   className="btn btn-primary mt-3 w-100 text-nowrap"
+                   onClick={() => navigate(`/details/${category}/${item.uid}`)}
+                >
                     Detalles
                 </button>
 

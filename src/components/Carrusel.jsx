@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-export default function Carrusel({ title, data, imgBaseUrl, favorites, toggleFavorite }) {
+export default function Carrusel({ title, data, imgBaseUrl, favorites, toggleFavorite, category }) {
 
     return (
         <div className="mt-4">
@@ -17,6 +17,7 @@ export default function Carrusel({ title, data, imgBaseUrl, favorites, toggleFav
                     <Card
                         key={item.uid}
                         item={item}
+                        category={category}
                         imgUrl={`${imgBaseUrl}/${item.uid}.jpg`}
                         isFavorite={favorites.includes(item.uid)}
                         onFavoriteToggle={() => toggleFavorite(item.uid)}
